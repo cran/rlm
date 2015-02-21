@@ -4,10 +4,11 @@
 #include <functional>
 #include <cstring>
 #include <limits>
+
 #include <Rconfig.h>
+#include <R.h>
 
 #include "IWLS.h"
-#include "r_util.h"
 
 #ifdef SUPPORT_OPENMP
 #include <omp.h>
@@ -279,7 +280,7 @@ namespace IWLS {
     }
 
     extern "C" {
-    EXPORT void rlm_cpu(double *y, double *x, double *w, double *est, int *N, int *K, int *M, double *acc)
+    void rlm_cpu(double *y, double *x, double *w, double *est, int *N, int *K, int *M, double *acc)
     {
         //init
         IWLS::N = *N;
@@ -319,7 +320,7 @@ namespace IWLS {
             int cFactor = 0;    //counter of factors
 
             for (int n = 0; n < IWLS::N; ++n) {
-                if (R_UTIL::is_na(IWLS::y[m][n])) {
+                if (ISNA(IWLS::y[m][n])) {
                     IWLS::av[m][n] = false;
                     IWLS::w[m][n] = 0.0;
                 }
