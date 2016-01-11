@@ -1,7 +1,7 @@
 rlm <-
 	function(formula, weights, acc = 1e-2)
 {
-	options("na.action"=na.pass)
+	options("na.action"=stats::na.pass)
 
 	mf <- match.call(expand.dots = FALSE)
 	mf$acc <- NULL
@@ -9,8 +9,8 @@ rlm <-
 	mf <- eval.parent(mf)
 	mt <- attr(mf, "terms")
 
-	y <- model.response(mf)
-	y <- na.pass(y)
+	y <- stats::model.response(mf)
+	y <- stats::na.pass(y)
 
 	if(is.vector(y)) {
 		N <- length(y)
@@ -30,7 +30,7 @@ rlm <-
 	}
 
 
-	x <- model.matrix(mt, mf, contrasts)
+	x <- stats::model.matrix(mt, mf, stats::contrasts)
 	nrow_x <- dim(x)[1]
 	ncol_x <- dim(x)[2]
 	K <- ncol_x
@@ -38,7 +38,7 @@ rlm <-
 		stop("number of regressors is too big")		
 	}
 
-	w <- model.weights(mf)
+	w <- stats::model.weights(mf)
 	nrow_w <- length(w)
 
 

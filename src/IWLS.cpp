@@ -10,7 +10,7 @@
 
 #include "IWLS.h"
 
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
 #include <omp.h>
 #endif
 
@@ -49,7 +49,7 @@ namespace IWLS {
 
     void setPrevResidue()
     {
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < M; ++m)
@@ -105,7 +105,7 @@ namespace IWLS {
     }
 
     void calcResidue(){
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < M; ++m){
@@ -123,7 +123,7 @@ namespace IWLS {
     }
 
     void calcSigma(){
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < M; ++m) {
@@ -159,7 +159,7 @@ namespace IWLS {
 
     //w <- psi(resid/scale)
     void calcWeight(){
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < M; ++m) {
@@ -232,7 +232,7 @@ namespace IWLS {
             }
         }
         
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < M; ++m) {
@@ -301,7 +301,7 @@ namespace IWLS {
             o[m] = 0;
         }
 
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < IWLS::M; ++m) {
@@ -370,7 +370,7 @@ namespace IWLS {
         } while (stopIWLS() != 1);
         // end IWLS
 
-#ifdef SUPPORT_OPENMP
+#ifdef _OPENMP
         #pragma omp parallel for
 #endif
         for (int m = 0; m < *M; ++m)
